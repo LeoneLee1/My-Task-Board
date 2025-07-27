@@ -92,6 +92,20 @@ function TaskBoard() {
     taskData();
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    if (window.confirm("Delete task?")) {
+      await Axios.delete(`${API_HOST.url}/tasks/delete/${selectedItem.id}`);
+
+      alert("Successfully delete task");
+      taskData();
+      setOpenEdit(false);
+      console.log("Successfully delete task");
+    } else {
+      console.log("Deletion cancelled.");
+    }
+  };
+
   const bgColorMap = {
     inProgress: "bg-yellow-300",
     completed: "bg-green-300",
@@ -335,10 +349,10 @@ function TaskBoard() {
               </div>
 
               <div className="flex justify-end space-x-2 pt-2">
-                <button type="button" className="px-4 py-2 bg-red-600 text-white rounded">
+                <button type="button" className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-800" onClick={handleDelete}>
                   <i className="fa fa-trash"></i> Delete
                 </button>
-                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800">
                   <i className="fa fa-check"></i> Save
                 </button>
               </div>
